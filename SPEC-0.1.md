@@ -76,7 +76,7 @@ In UglyDB format, the above-written JSON array will look like this:
         3, "Justine", 0, 1.3,
         4, "Paul", 1, 2.3
       ],
-      []                                                _// 4. normalizedValues (optional)_
+      []                                                _// 4. normalizedObjects (optional)_
       "|Pizza|Hamburger",                               _// 5. normalizedStrings (optional)_
     ]
 
@@ -132,8 +132,8 @@ For instance, given this file:
         3, "Justine", 0, 1.3,
         4, "Paul", 1, 2.3
       ],
-      "|Pizza|Hamburger",                               _// 4. normalizedStrings (optional)_
-      []                                                _// 5. normalizedNumbers (optional)_
+      "|Pizza|Hamburger",                               _// 5. normalizedStrings (optional)_
+      []                                                _// 4. normalizedObjects (optional)_
     ]
 
 The values `1, "Adam", 0, 1.2` make up the first record. Those values' keys are `"id"`, `"name"`, `"food"` and `"servings"`, respectively.
@@ -141,19 +141,19 @@ The values `1, "Adam", 0, 1.2` make up the first record. Those values' keys are 
 When translating those values, we must consider the columns' types. This amounts to some logic:
 
 1. If `type == 1`, take the value as-is. (For instance, in the given example, the value `1` is a Number.)
-2. If `type == 2`, the value is normalized in **normalizedValues** (see below). Treat it as an index into `normalizedValues`.
-    * If the index exceeds the bounds of the `normalizedValues` Array, it's an error.
+2. If `type == 2`, the value is normalized in **normalizedObjects** (see below). Treat it as an index into `normalizedObjects`.
+    * If the index exceeds the bounds of the `normalizedObjects` Array, it's an error.
 3. If `type == 3`, the value _may_ be normalized in **normalizedStrings** (see below). Apply this logic:
     * If the value is `-1`, translate it to `null`.
     * If the value is a String, take it as-is. (For instance, in the given example, the value `"Adam"` is a String and it means `"Adam"`.)
     * If the value is a Number, treat it as an index into `normalizedStrings`. (For instance, in the given example, the value `0` is a Number, an index into `normalizedStrings`. It translates to `normalizedStrings[0]`, which is `Pizza`.)
             * If the index exceeds the bounds of the `normalizedStrings` Array, it's an error.
 
-### 4. normalizedValues
+### 4. normalizedObjects
 
-If there is a column with `type == 2`, there must exist a `normalizedValues` Array. If there is no `type == 2` column, there must not exist a normalizedValues Array. If these conditions aren't met, it's an error.
+If there is a column with `type == 2`, there must exist a `normalizedObjects` Array. If there is no `type == 2` column, there must not exist a normalizedObjects Array. If these conditions aren't met, it's an error.
 
-The values in `normalizedValues` may be of any type.
+The values in `normalizedObjects` may be of any type.
 
 ### 5. normalizedStrings
 
@@ -172,7 +172,7 @@ In JavaScript, we could express this logic like so:
 
     var encodedNormalizedStrings = "|Pizza|Hamburger";
     var separator = encodedNormalizedStrings.charAt(0);
-    var normalizedStrings = encodedNormalizedStrings.slice(1).split(separator);
+    var normalizedStrings = encodedNormalizedStrings.split(separator).slice(1);
     // normalizedStrings is now [ "Pizza", "Hamburgers" ]
 
 The `separator` isn't necessarily `|`. It could be any single character. (Why? Because if one of the normalized Strings contained `|` it would break everything.)

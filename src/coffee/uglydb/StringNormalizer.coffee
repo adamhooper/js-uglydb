@@ -57,13 +57,33 @@ define ->
       indexes = @indexes = {}
       strings = ['']
 
+      usedChars = {} # Set of char -> null
+
       for word, i in words
         string = word.string
         indexes[string] = i
         strings.push(string)
 
+        for i in [ 0 .. string.length ]
+          c = string.charAt(i)
+          usedChars[c] = null
+
       normalizationString = if words.length > 0
-        strings.join('|')
+        separator = null
+        for c in [ '|', ',' ]
+          if c not of usedChars
+            separator = c
+            break
+        if !separator?
+          # We can't separate by | or ,? Then choose any valid Unicode character
+          # that renders without a backslash
+          for i in [ 32 ... 65536 ] # not _every_ character ... yet. This should suffice for most datasets
+            c = String.fromCharCode(i)
+            if c not of usedChars && JSON.stringify(c).indexOf('\\') == -1
+              separator = c
+              break
+
+        strings.join(separator)
       else
         null
 

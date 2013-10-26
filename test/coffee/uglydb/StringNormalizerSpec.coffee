@@ -29,6 +29,13 @@ define [ 'uglydb/StringNormalizer' ], (StringNormalizer) ->
       it 'should give a normalizationString with "|" as word separator', ->
         expect(subject.asDb().normalizationString).toEqual('|foo')
 
+    it 'should split by , when | is taken', ->
+      subject.add('fo|o'); subject.add('fo|o')
+
+    it 'should split by something else when , and | are taken', ->
+      subject.add(',|!@#$ ~'); subject.add(',|!@#$ ~')
+      expect(subject.asDb().normalizationString).toEqual('%,|!@#$ ~')
+
     it 'should sort more-frequent strings before less-frequent ones', ->
       subject.add('foo') for i in [ 0 .. 10 ]
       subject.add('bar') for i in [ 0 .. 20 ]
@@ -53,3 +60,5 @@ define [ 'uglydb/StringNormalizer' ], (StringNormalizer) ->
 
       for i in [ 0 .. 100 ]
         expect(trlen(String(i))).toBeLessThan(JSON.stringify(String(i)).length + 1)
+
+
