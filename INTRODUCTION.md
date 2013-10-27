@@ -185,18 +185,22 @@ In this particular file, these rules won't actually improve our space efficiency
 
 That's still 128 bytes, and it promises more savings as we add more rows and normalize more strings.
 
-### Normalizing floats, Arrays, etc.
+### Normalizing floats, Arrays, Objects, etc.
 
-It's worth a shot, right? We can normalize Numbers the same way we do strings (with an Array of Numbers and a new column "type", numbered 3). That wouldn't save space in this particular file, but it's easy to calculate whether it would in the file in question.
+We can normalize Objects in general, too. We can't do the same trick in which we skip normalizing unique Strings: if we're normalizing a column of Objects, we can't tell whether a Number is an index or a value, so the only solution is to make them all indexes.
 
-When we normalize Numbers, we can't be selective (as we are with Strings): we need to put them _all_ into the array.
-
-We can also normalize arrays-of-numbers, arrays-of-strings, hash-of-numbers, hash-of-strings, and so forth. Each would need its own type number.
-
-This library is architected to eventually support such optimizations ... but at a certain point, the effort becomes excessive because it helps too few people. So for the present, this library normalizes integers and nothing else.
+This makes it harder to save costs; but we can make a good guess, for each column, whether we'll save space or not if we normalize all the values into an Array.
 
 ### Adding a spec
 
 Part of JSON's charm is that it's readable, right? Let's help people un-uglify. We add the (optional) string `"http://git.io/uglydb-0.1"` at the start of the file so perusers can understand the file format and how to read it.
 
-If those characters really matter, add `--no-spec-url` or set `{ specUrl: false }`.
+### But we can make the file smaller still!
+
+Yup, that spec URL takes an extra 27 characters (with the preceding comma). And you can surely spot another 4 or 5 bytes' worth that this spec could omit. And maybe you have some other great ideas that will shrink your dataset a few extra bytes. (For instance: maybe there's a way to normalize Strings within nested Objects?)
+
+Relax. It's just a few bytes.
+
+UglyDB won't squeeze every last byte out of your JSON. It's designed to shrink your large, compressed JSON files by 20%-50% while keeping them easy to parse.
+
+If the first 90% worth of benefits come with little effort and the next 10% is hard and full of compromise ... well, from an engineering point of view, it's not worth tackling that last 10%.
