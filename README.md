@@ -75,7 +75,8 @@ How do I create an UglyDB file?
 On the command-line, you need NodeJS:
 
     npm install -g uglydb # once
-    uglydb-write --verbose input-file.json > output-file.uglydb.json
+    uglydb-zip < input-file.json > output-file.uglydb.json
+    uglydb-unzip < output-file.uglydb.json > input-file-recreated.json
 
 In code, you need NodeJS, too:
 

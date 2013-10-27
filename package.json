@@ -4,6 +4,10 @@
   "description": "Pack large JSON objects into to small sizes by normalizing.",
   "main": "index.js",
   "scripts": {},
+  "bin": {
+    "uglydb-zip": "bin/uglydb-zip.js",
+    "uglydb-unzip": "bin/uglydb-unzip.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/adamhooper/js-uglydb.git"
