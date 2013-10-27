@@ -1,6 +1,6 @@
 define [
-  'uglydb/StringNormalizer'
-  'uglydb/ObjectNormalizer'
+  './StringNormalizer'
+  './ObjectNormalizer'
 ], (StringNormalizer, ObjectNormalizer) ->
   toString = Object.prototype.toString
   isString = (s) -> toString.call(s) == '[object String]'

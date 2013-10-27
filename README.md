@@ -1,7 +1,7 @@
 UglyDB
 ======
 
-UglyDB makes your [JSON](http://www.json.org/) table data small by normalizing it and truncating floats.
+UglyDB makes your tabular [JSON](http://www.json.org/) data smaller by normalizing it.
 
 What kind of data does it handle?
 ---------------------------------
@@ -89,7 +89,6 @@ In both cases, UglyDB has certain options. On the command-line, `--like=this`. I
 
 | command-line | JavaScript | default | description |
 | ------------ | ---------- | ------- | ----------- |
-| `--verbose` | `{ verbose: true }` | `false` | Outputs what's happening on using `console.log()`. This includes strategies attempted and their resulting space savings. (See INTRODUCTION.md for more on strategies.) |
 | `--precision=3` | `{ precision: 3 }` | `null` | Rounds floating-point Numbers to take at most this number of decimal places. (With `precision=3`, `3.1415` becomes `3.142`, and `3.1` stays `3.1`. When `null` (the default), does not round Numbers. |
 
 How do I read an UglyDB file?
@@ -115,7 +114,7 @@ Or you can do it on your website with RequireJS:
 
 Or you can do it on your website _without_ RequireJS. First you need a script tag:
 
-    <script src="/path/to/uglydb-read.VERSION.js"></script>
+    <script src="/path/to/uglydb-read.no-require.js"></script>
 
 Now you can use this code:
 
@@ -130,6 +129,23 @@ How does it work?
 See INTRODUCTION.md to see how the specification was derived.
 
 See SPEC-0.1.md for an explanation of what an UglyDB file looks like. This contains all the information you need to read or write UglyDB files, and it should help you get started if you want to extend the format.
+
+How can I contribute?
+---------------------
+
+Start the development environment:
+
+```
+sudo npm install -g grunt-cli
+npm install
+grunt develop
+```
+
+Now edit `test/coffee/**/*.coffee` to make something fail, then edit `src/coffee/**/*.coffee` until everything passes.
+
+Run `grunt` to update the `dist/` directory.
+
+Please send pull requests. I prefer pull requests _with tests_, whether or not any code accompanies them.
 
 License?
 --------
