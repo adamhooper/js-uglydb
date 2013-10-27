@@ -205,3 +205,8 @@ define [ 'uglydb/write' ], (write) ->
         records = result[2]
         expect(records[17]).toEqual(1)
         expect(records[19]).toEqual(2)
+
+      it 'should translate values _after_ rounding them', ->
+        result = write(array, precision: 2)
+        objects = result[3]
+        expect(objects[0]).toEqual(3.14)
