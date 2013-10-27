@@ -29,7 +29,8 @@
     "strings",
     "floats",
     "arrays",
-    "objects"
+    "objects",
+    "uglydb"
   ],
   "author": "Adam Hooper <adam@adamhooper.com>",
   "license": "Public Domain",
