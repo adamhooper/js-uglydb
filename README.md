@@ -63,11 +63,21 @@ It removes whitespace.
 
 It can optionally truncate floats, which is nifty.
 
-Parsing UglyDB JSON is often faster than parsing raw JSON[citation needed].
+Parsing UglyDB is plenty fast: about (half the speed of parsing equivalent JSON)[http://jsperf.com/reading-uglydb-vs-reading-json]. The speed gain in downloading more than makes up for this.
 
-Translating from JSON -> UglyDB -> JSON can often reduce memory usage and put less load on the garbage collector (since Strings aren't duplicated).
+Parsed UglyDB usually needs less memory than equivalent parsed JSON, which should put less load on the garbage collector.
 
 UglyDB competes with CSV. CSV tends to work better when there _aren't_ any duplicate Strings in the file; UglyDB works better when there _are_. UglyDB is usually more convenient than CSV: it maintains objects' types and can handle complex JSON values, while CSV values can only be Strings.
+
+To see some size comparisons, check out https://github.com/adamhooper/js-uglydb-examples. For instance, consider a Statistics Canada dataset of crime statistics which contains long, repeated strings:
+
+| File format | Size (kb) | Size (kb gzipped) | compared to gzipped CSV |
+| ----------- | --------- | ----------------- | ----------------------- |
+| CSV         | 12,732    | 616               | 100%                    |
+| JSON        | 20,541    | 688               | 112%                    |
+| UglyDB JSON | 2,780     | 479               | 78%                     |
+
+After compression, this particular file is 22% smaller in UglyDB format than in CSV (and it's faster to parse) and about 30% smaller in UglyDB format than in JSON. Larger savings (40% and beyond) are easy to attain.
 
 How do I create an UglyDB file?
 -------------------------------
@@ -76,7 +86,6 @@ On the command-line, you need NodeJS:
 
     npm install -g uglydb # once
     uglydb-zip < input-file.json > output-file.uglydb.json
-    uglydb-unzip < output-file.uglydb.json > input-file-recreated.json
 
 In code, you need NodeJS, too:
 
@@ -98,7 +107,7 @@ How do I read an UglyDB file?
 On the command-line, you need NodeJS:
 
     npm install -g uglydb # once
-    uglydb-read input-file.uglydb.json > output-file.json
+    uglydb-unzip input-file.uglydb.json > output-file.json
 
 In code, you can do it with NodeJS:
 
