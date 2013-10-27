@@ -53,6 +53,10 @@ define [ 'uglydb/read' ], (read) ->
         { foo: 'foo' }
       ])
 
+    it 'should translate non-normalized strings', ->
+      result = read([ [ 'foo', 3 ], [ 'foo' ], '' ])
+      expect(result).toEqual([ { foo: 'foo' } ])
+
     it 'should translate normalized -1 as null', ->
       result = read([ [ 'foo', 3 ], [ -1 ], "|" ])
       expect(result).toEqual([ { foo: null } ])

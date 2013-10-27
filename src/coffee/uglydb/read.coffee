@@ -98,12 +98,15 @@ define ->
             throw new Error("A normalized object is requested at index #{rawValue} but the maximum index is #{normalizedObjects.length - 1}. See #{SPEC_URL}")
           normalizedObjects[rawValue]
         when 3
-          if rawValue < 0
-            null
-          else if rawValue >= normalizedStrings.length
-            throw new Error("A normalized string is requested at index #{rawValue} but the maximum index is #{normalizedStrings.length - 1}. See #{SPEC_URL}")
+          if isString(rawValue)
+            rawValue
           else
-            normalizedStrings[rawValue]
+            if rawValue < 0
+              null
+            else if rawValue >= normalizedStrings.length
+              throw new Error("A normalized string is requested at index #{rawValue} but the maximum index is #{normalizedStrings.length - 1}. See #{SPEC_URL}")
+            else
+              normalizedStrings[rawValue]
 
       obj[keyNames[keyIndex]] = value
 

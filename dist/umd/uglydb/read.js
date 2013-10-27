@@ -143,12 +143,16 @@ var SPEC_URL, isString, toString, uglydbToObject;
             }
             return normalizedObjects[rawValue];
           case 3:
-            if (rawValue < 0) {
-              return null;
-            } else if (rawValue >= normalizedStrings.length) {
-              throw new Error("A normalized string is requested at index " + rawValue + " but the maximum index is " + (normalizedStrings.length - 1) + ". See " + SPEC_URL);
+            if (isString(rawValue)) {
+              return rawValue;
             } else {
-              return normalizedStrings[rawValue];
+              if (rawValue < 0) {
+                return null;
+              } else if (rawValue >= normalizedStrings.length) {
+                throw new Error("A normalized string is requested at index " + rawValue + " but the maximum index is " + (normalizedStrings.length - 1) + ". See " + SPEC_URL);
+              } else {
+                return normalizedStrings[rawValue];
+              }
             }
           }
         }();
