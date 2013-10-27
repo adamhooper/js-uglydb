@@ -107,7 +107,7 @@ How do I read an UglyDB file?
 On the command-line, you need NodeJS:
 
     npm install -g uglydb # once
-    uglydb-unzip input-file.uglydb.json > output-file.json
+    uglydb-unzip < input-file.uglydb.json > output-file.json
 
 In code, you can do it with NodeJS:
 
