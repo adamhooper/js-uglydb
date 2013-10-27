@@ -8,12 +8,12 @@ What do you mean, "JSON table data"?
 
 We mean tables of records, such as this:
 
-| id | name | food | servings |
-| -- | ---- | ---- | -------- |
-| 1 | Adam | Pizza | 1.2      |
-| 2 | Charlie | Hamburger | 2.4123123 |
-| 3 | Justine | Pizza | 1.3 |
-| 4 | Paul | Hamburger | 2.3 |
+| id  | name    | food      | servings  |
+| --- | ----    | ----      | --------- |
+| 1   | Adam    | Pizza     | 1.2       |
+| 2   | Charlie | Hamburger | 2.4123123 |
+| 3   | Justine | Pizza     | 1.3       |
+| 4   | Paul    | Hamburger | 2.3       |
 
 In regular JSON, this would be expressed like so:
 
