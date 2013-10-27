@@ -1,6 +1,6 @@
 {
   "name": "js-uglydb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Pack large JSON objects into to small sizes by normalizing.",
   "repository": {
     "url": "https://github.com/adamhooper/js-uglydb"
