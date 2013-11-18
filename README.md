@@ -40,16 +40,16 @@ For instance, UglyDB can losslessly translate data like this:
 Into something a bit more cryptic that looks like this:
 
     [
-      "http://git.io/uglydb-0.1",                       _// 1. specification (optional)_
-      [ "id", 1, "name", 2, "food", 2, "servings", 1 ], _// 2. header_
-      [                                                 _// 3. records_
+      "http://git.io/uglydb-0.1",                       // 1. specification (optional)
+      [ "id", 1, "name", 2, "food", 2, "servings", 1 ], // 2. header
+      [                                                 // 3. records
         1, "Adam", 0, 1.2,
         2, "Charlie", 1, 2.4123123,
         3, "Justine", 0, 1.3,
         4, "Paul", 1, 2.3
       ],
-      "|Pizza|Hamburger",                               _// 4. normalizedStrings (optional)_
-      []                                                _// 5. normalizedNumbers (optional)_
+      "|Pizza|Hamburger",                               // 4. normalizedStrings (optional)
+      []                                                // 5. normalizedObjects (optional)
     ]
 
 ... and it translates the other way, too.
@@ -63,7 +63,7 @@ It removes whitespace.
 
 It can optionally truncate floats, which is nifty.
 
-Parsing UglyDB is plenty fast: about (half the speed of parsing equivalent JSON)[http://jsperf.com/reading-uglydb-vs-reading-json]. The speed gain in downloading more than makes up for this.
+Parsing UglyDB is plenty fast: about [half the speed of parsing equivalent JSON](http://jsperf.com/reading-uglydb-vs-reading-json). The speed gain in downloading more than makes up for this.
 
 Parsed UglyDB usually needs less memory than equivalent parsed JSON, which should put less load on the garbage collector.
 
